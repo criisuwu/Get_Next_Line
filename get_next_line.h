@@ -6,7 +6,7 @@
 /*   By: chomobon <chomobon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 11:08:05 by chomobon          #+#    #+#             */
-/*   Updated: 2024/07/04 16:19:40 by chomobon         ###   ########.fr       */
+/*   Updated: 2024/07/08 12:48:44 by chomobon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char    *get_next_line(int fd);
 char    *ft_read(int fd);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strdup(const char *s1);
-int	ft_strlen(char *str);
-
+int	     ft_strlen(const char *str);
+char	*ft_strjoin(const char *s1, const char *s2);
 
 #endif

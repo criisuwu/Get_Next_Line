@@ -6,7 +6,7 @@
 /*   By: chomobon <chomobon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 11:17:11 by chomobon          #+#    #+#             */
-/*   Updated: 2024/07/08 11:14:05 by chomobon         ###   ########.fr       */
+/*   Updated: 2024/07/08 12:48:59 by chomobon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*ft_strchr(const char *s, int c)
 	return (d);
 } */
 
-int	ft_strlen(char *str)
+int	ft_strlen(const char *str)
 {
 	int	x;
 
@@ -58,3 +58,29 @@ int	ft_strlen(char *str)
 	return (x);
 }
 
+char	*ft_strjoin(const char *s1, const char *s2)
+{
+	unsigned int	i;
+	unsigned int	j;
+	char			*r;
+
+	if (!s1 && !s2)
+		return (NULL);
+	r = ((char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2)) + 1));
+	if (!r)
+		return (NULL);
+	i = 0;
+	while (s1[i] != '\0')
+	{
+		r[i] = s1[i];
+		i++;
+	}
+	j = 0;
+	while (s2[j] != '\0')
+	{
+		r[i + j] = s2[j];
+		j++;
+	}
+	r[i + j] = '\0';
+	return (r);
+}
