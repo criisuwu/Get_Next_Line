@@ -6,17 +6,16 @@
 /*   By: chomobon <chomobon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 11:04:22 by chomobon          #+#    #+#             */
-/*   Updated: 2024/07/08 12:39:31 by chomobon         ###   ########.fr       */
+/*   Updated: 2024/07/08 13:12:08 by chomobon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char    *ft_read(int fd)
+char    *ft_read(int fd, char *reserv)
 {
-    static char *reserv;
     char        *buff;
-    char        *line;
+    // char        *line;
     int         count_wd;
     int         i;
 
@@ -27,8 +26,9 @@ char    *ft_read(int fd)
     if (BUFFER_SIZE <= 0)
         return(NULL);
     count_wd = 1;
-    while (!ft_strchr(buff, '\n') && count_wd < 0)
+    while (reserv && !ft_strchr(reserv, '\n') && count_wd < 0)
     {
+        printf("entra\n");
         //Hasta que no encuetres un \n no devuelvas nada y hay que concat los caracteres
         //Todo: ver cuanta memoria necesito reservar
         //Probar buff 1 
@@ -38,39 +38,50 @@ char    *ft_read(int fd)
         count_wd = read(fd, buff, BUFFER_SIZE);
         if (count_wd == -1)
             return(NULL);
-        line = ft_strjoin(line, buff);
+        buff[count_wd] = '\0';
+        reserv = ft_strjoin(reserv, buff);
+        printf("%s\n", reserv);
+        
         //leer otra vez
         //concant
         
-    }
-    reserv = malloc(i + 1);
-    if (!reserv)
-        return (NULL);
-    if (buff[i] == '\n')
-    {
-        i++;
-        reserv = buff;
     }
     return (reserv);
 }
 
 char    *get_next_line(int fd)
 {
-    static char *new_line;
+    static char *reserv;
     char *str;
 
-    str = ft_read(fd);
-    new_line = ft_strchr(str, '\n');
+    if (!reserv)
+    {
+        reserv = malloc(1);
+        {
+            if (!reserv)
+                return (NULL);
+            reserv[0] = '\0';
+        }
+    }
+    reserv = ft_read(fd, reserv);
+    str = ft_strchr(str, '\n');
     
-    printf("This is str: %s\n" , str);
-    printf("This is new_line: %s\n" ,new_line);
-    return(new_line);
+    // printf("This is str: %s\n" , str);
+    // printf("This is new_line: %s\n" ,new_line);
+    return(reserv);
 }
 
 int main ()
 {
-    int op = open("a.txt", O_RDONLY);
+    char *line;
+    int fd = open("a.txt", O_RDONLY);
     //char *str = ft_read(op);
     //printf("Lo del archivo: %s\n", str);
-    char *str2 = get_next_line(op);
+    while ((line = get_next_line(fd)) != NULL)
+    {
+        printf("%s", line);
+        free(line);
+    }
+    close(fd);
+    return (0);
 }

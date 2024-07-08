@@ -6,7 +6,7 @@
 /*   By: chomobon <chomobon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 11:17:11 by chomobon          #+#    #+#             */
-/*   Updated: 2024/07/08 12:48:59 by chomobon         ###   ########.fr       */
+/*   Updated: 2024/07/08 13:00:24 by chomobon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 char	*ft_strchr(const char *s, int c)
 {
-
+	if (!s)
+		return (NULL);
 	while (*s != '\0')
 	{
 		s++;
