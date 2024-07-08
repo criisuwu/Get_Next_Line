@@ -6,7 +6,7 @@
 /*   By: chomobon <chomobon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 11:08:05 by chomobon          #+#    #+#             */
-/*   Updated: 2024/05/22 13:47:39 by chomobon         ###   ########.fr       */
+/*   Updated: 2024/07/04 16:19:40 by chomobon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 #define GET_NEXT_LINE_H
 
 #ifndef BUFFER_SIZE
-#define BUFFER_SIZE 20
+#define BUFFER_SIZE 1
+
 #endif
 
 #include <stdio.h>

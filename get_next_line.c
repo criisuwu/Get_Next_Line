@@ -6,7 +6,7 @@
 /*   By: chomobon <chomobon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 11:04:22 by chomobon          #+#    #+#             */
-/*   Updated: 2024/07/04 15:53:44 by chomobon         ###   ########.fr       */
+/*   Updated: 2024/07/08 11:03:50 by chomobon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,53 @@ char    *ft_read(int fd)
     if (!buff)
         return(NULL);
     count_wd = read(fd, buff, BUFFER_SIZE);
-    reserv = malloc(ft_strlen(buff) + 1);
-    if (!reserv)
-        return (NULL);
-    while (buff[i] != '\0')
+
+    while (buff[i] != '\0' || buff[i] != '\n') //Es un contador para reservar memoria a devolver
     {
-        reserv[i] = buff[i];
+        //Hasta que no encuetres un \n no devuelvas nada y hay que concat los caracteres
+        //Todo: ver cuanta memoria necesito reservar
+        //Probar buff 1 
+        /*reserv[i] = buff[i];*/
+        //printf("resv: %s\n", reserv);
         i++;
     }
+    if (buff[i] == '\n')
+        i++;
+    reserv = malloc(i + 1);
+    if (!reserv)
+        return (NULL);
     return (reserv);
     
 }
+
+/* char	*ft_strjoin(const char *s1, const char *s2)
+{
+	unsigned int	i;
+	unsigned int	j;
+	char			*r;
+
+	if (!s1 && !s2)
+		return (NULL);
+	r = ((char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2)) + 1));
+	if (!r)
+		return (NULL);
+	i = 0;
+	while (s1[i] != '\0')
+	{
+		r[i] = s1[i];
+		i++;
+	}
+	j = 0;
+	while (s2[j] != '\0')
+	{
+		r[i + j] = s2[j];
+		j++;
+	}
+	r[i + j] = '\0';
+	return (r);
+} */
+
+
 
 int main ()
 {
