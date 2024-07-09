@@ -6,7 +6,7 @@
 /*   By: chomobon <chomobon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 11:04:22 by chomobon          #+#    #+#             */
-/*   Updated: 2024/07/08 13:12:08 by chomobon         ###   ########.fr       */
+/*   Updated: 2024/07/09 13:02:15 by chomobon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 char    *ft_read(int fd, char *reserv)
 {
     char        *buff;
-    // char        *line;
     int         count_wd;
     int         i;
 
@@ -29,22 +28,17 @@ char    *ft_read(int fd, char *reserv)
     while (reserv && !ft_strchr(reserv, '\n') && count_wd < 0)
     {
         printf("entra\n");
-        //Hasta que no encuetres un \n no devuelvas nada y hay que concat los caracteres
         //Todo: ver cuanta memoria necesito reservar
         //Probar buff 1 
-        /*reserv[i] = buff[i];*/
-        //printf("resv: %s\n", reserv);
         
         count_wd = read(fd, buff, BUFFER_SIZE);
         if (count_wd == -1)
             return(NULL);
         buff[count_wd] = '\0';
         reserv = ft_strjoin(reserv, buff);
-        printf("%s\n", reserv);
-        
-        //leer otra vez
-        //concant
-        
+        if (reserv[count_wd] == '\0')
+            reserv == NULL;
+        printf("%s\n", reserv); 
     }
     return (reserv);
 }

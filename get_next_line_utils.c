@@ -6,7 +6,7 @@
 /*   By: chomobon <chomobon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 11:17:11 by chomobon          #+#    #+#             */
-/*   Updated: 2024/07/08 13:00:24 by chomobon         ###   ########.fr       */
+/*   Updated: 2024/07/09 12:38:56 by chomobon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-/* char	*ft_strdup(char *s1)
+char	*ft_strdup(char *s1)
 {
 	char	*d;
 	size_t	l;
@@ -36,7 +36,7 @@ char	*ft_strchr(const char *s, int c)
 	i = 0;
 	l = ft_strlen(s1);
 	d = malloc(l + 1);
-	if (d == '\0')
+	if (!d)
 		return (NULL);
 	while (i < l && s1[i])
 	{
@@ -45,7 +45,7 @@ char	*ft_strchr(const char *s, int c)
 	}
 	d[i] = '\0';
 	return (d);
-} */
+}
 
 int	ft_strlen(const char *str)
 {
