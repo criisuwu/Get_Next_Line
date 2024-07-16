@@ -6,80 +6,72 @@
 /*   By: chomobon <chomobon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 11:04:22 by chomobon          #+#    #+#             */
-/*   Updated: 2024/07/16 15:49:44 by chomobon         ###   ########.fr       */
+/*   Updated: 2024/07/16 18:12:04 by chomobon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-/* char    *ft_read(int fd, char *reserv)
+char *ft_read(int fd, char *reserv)
 {
     char    *buff;
-    //char    *line;
-    int     count_wd;
+    int     verify;
 
-    buff = malloc(BUFFER_SIZE + 1);
-    if (!buff)
-        return(NULL);
-    if (BUFFER_SIZE <= 0)
-        return(NULL);
-    count_wd = 1;
-    
-    while (reserv && !ft_strchr(reserv, '\n')) //&& count_wd < 0
+    verify = 1;
+    buff = malloc(sizeof(char) * BUFFER_SIZE + 1);
+    if(!buff)
+        return (NULL);
+    while(!ft_strchr(buff, '\n') && verify > 0)
     {
-        printf("entraaaaaaaaaaaa\n");
-        count_wd = read(fd, buff, BUFFER_SIZE);
-        if (count_wd == -1)
-            return(NULL);
-        buff[count_wd] = '\0';
+        verify = read(fd, buff, BUFFER_SIZE);
+        if (verify <= 0)
+        {
+            free (buff);
+            free(reserv);
+            return (NULL);
+        }
+        buff[verify] = '\0';
         reserv = ft_strjoin(reserv, buff);
-        //printf("line: %s\n", line);
         printf("buff: %s\n", buff);
         printf("reserv: %s\n", reserv);
-        break;
     }
+    free (buff);
     return (reserv);
-} */
+}
 
 char    *get_next_line(int fd)
 {
     static char *reserv;
     char    *line;
-    char    *buff;
     char    *sub_str;
-    int     i;
     char    *aux;
 
-    buff = malloc(sizeof(char) * BUFFER_SIZE + 1);
-    reserv = ft_strdup("");
-    if(!buff)
-        return(NULL);
-    while (!ft_strchr(buff, '\n'))
+    if (fd <= 0 || BUFFER_SIZE <= 0)
+        return (NULL);
+    reserv = ft_read(fd, reserv);
+    if (!aux)
+        return (NULL);
+    line = ft_strchr(reserv, '\n');
+    printf("line: %s\n", line);
+    sub_str = ft_substr(reserv, 0, ft_strlen(reserv) - ft_strlen(line));
+    printf("sub_str: %s\n", sub_str);
+    return (sub_str);
+
+    /* while (!ft_strchr(buff, '\n') && i > 0)
     {
-        i = read(fd, buff, BUFFER_SIZE);
-        if (i <= 0)
-        {            
-            free(buff);
-            return(NULL);
-        }
-        // printf("BUFF: %s\n", buff);
-        // printf("AAA: %s\n",ft_strchr(buff, '\n'));
-        buff[i] = '\0';
-        //aux = ft_strdup(reserv);
-        //printf("aux: %s\n", aux);
-        reserv = ft_strjoin(reserv, buff);
-        // printf("esto es reserv: %s\n", reserv);
-        //free(aux);
-        // printf("hola bucle");
-        //free(buff);
         line = ft_strchr(reserv, '\n');
         sub_str = ft_substr(reserv, 0, ft_strlen(reserv) - ft_strlen(line));
         buff = reserv;
-        reserv = ft_strdup(line);
-        free(buff);
-        return(sub_str);
+        printf("buff: %s\n", buff);
+        reserv = line;
+        aux = sub_str;
+        sub_str = ft_strjoin(aux, reserv);
+        free(aux);
+        printf("sub_str: %s\n", sub_str);
+        printf("reserv: %s\n", reserv);
     }
-    
+    return(sub_str);
+     */
 
 
         
