@@ -6,7 +6,7 @@
 /*   By: chomobon <chomobon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 11:08:05 by chomobon          #+#    #+#             */
-/*   Updated: 2024/07/09 12:38:01 by chomobon         ###   ########.fr       */
+/*   Updated: 2024/07/16 15:26:35 by chomobon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #define GET_NEXT_LINE_H
 
 #ifndef BUFFER_SIZE
-#define BUFFER_SIZE 1
+#define BUFFER_SIZE 10
 
 #endif
 
@@ -30,6 +30,7 @@ char    *ft_read(int fd, char *reserv);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strdup(char *s1);
 int	     ft_strlen(const char *str);
-char	*ft_strjoin(const char *s1, const char *s2);
+char	*ft_strjoin(char *s1, char *s2);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 #endif

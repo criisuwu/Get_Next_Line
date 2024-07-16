@@ -6,7 +6,7 @@
 /*   By: chomobon <chomobon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 11:17:11 by chomobon          #+#    #+#             */
-/*   Updated: 2024/07/09 12:38:56 by chomobon         ###   ########.fr       */
+/*   Updated: 2024/07/16 15:48:54 by chomobon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strchr(const char *s, int c)
 	{
 		s++;
 		if (*s == (char)c)
-			return ((char *)(s) + 1);
+			return ((char *)(s));
 	}
 	if ((char) c == '\0')
 		return((char *) s);
@@ -34,6 +34,8 @@ char	*ft_strdup(char *s1)
 	size_t	i;
 
 	i = 0;
+	if (!s1)
+		return(NULL);
 	l = ft_strlen(s1);
 	d = malloc(l + 1);
 	if (!d)
@@ -52,6 +54,8 @@ int	ft_strlen(const char *str)
 	int	x;
 
 	x = 0;
+	if (str == NULL)
+		return(0);
 	while (str[x] != '\0')
 	{
 		x++;
@@ -59,13 +63,13 @@ int	ft_strlen(const char *str)
 	return (x);
 }
 
-char	*ft_strjoin(const char *s1, const char *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	unsigned int	i;
 	unsigned int	j;
 	char			*r;
 
-	if (!s1 && !s2)
+	if (!s1 || !s2)
 		return (NULL);
 	r = ((char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2)) + 1));
 	if (!r)
@@ -84,4 +88,28 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	}
 	r[i + j] = '\0';
 	return (r);
+}
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	unsigned int	i;
+	char			*substr;
+
+	if (!s)
+		return (NULL);
+	if (start > ft_strlen(s))
+		return (ft_strdup(""));
+	if (len > ft_strlen(s + start))
+		len = ft_strlen(s + start);
+	substr = (char *)malloc(sizeof(char) * (len + 1));
+	if (!substr)
+		return (NULL);
+	i = 0;
+	while (i < len && s[start + i] != '\0')
+	{
+		substr[i] = s[start + i];
+		i++;
+	}
+	substr[i] = '\0';
+	return (substr);
 }
