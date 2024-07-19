@@ -6,7 +6,7 @@
 /*   By: chomobon <chomobon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 11:04:22 by chomobon          #+#    #+#             */
-/*   Updated: 2024/07/19 15:25:01 by chomobon         ###   ########.fr       */
+/*   Updated: 2024/07/19 17:58:38 by chomobon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ char	*ft_place_static(char *str)
 
 	position = 0;
 	len = ft_strlen(ft_strchr(str, '\n'));
-	if (len)
+	if (len != 0)
 		position = ft_substr(ft_strchr(str, '\n'), 0, len);
-	else if (!len)
+	else if (len == 0)
 		position = 0;
 	return (position);
 }
@@ -31,13 +31,17 @@ char	*ft_line(char *str)
 {
 	char	*line;
 	int		len;
+	int		breakline;
 
 	line = 0;
-	len = ft_strlen(ft_strchr(str, '\n'));
-	if (!ft_strchr(str, '\n') && ft_strlen(str) > 0)
-		line = ft_substr(str, 0, ft_strlen(str));
-	else if (ft_strlen(str) > 0)
-		line = ft_substr(str, 0, ft_strlen(str) - len);
+	len = ft_strlen(str);
+	if (!ft_strchr(str, '\n') && len > 0)
+		line = ft_substr(str, 0, len);
+	else if (len > 0)
+	{
+		breakline = ft_strlen(ft_strchr(str, '\n'));
+		line = ft_substr(str, 0, len - breakline);
+	}
 	return (line);
 }
 
@@ -51,11 +55,11 @@ char	*ft_read(int fd, char *reserv)
 
 	verify = 1;
 	aux = ft_substr(reserv, 0, ft_strlen(reserv));
-	while (!ft_strchr(buff, '\n') && verify > 0)
+	while (!ft_strchr(buff, '\n') && verify != 0)
 	{
 		buff = malloc(sizeof(char) * BUFFER_SIZE + 1);
 		if (!buff)
-			return (NULL);
+			return (free (reserv), NULL);
 		verify = read(fd, buff, BUFFER_SIZE);
 		if (verify <= 0)
 			return (free (buff), free(reserv), NULL);
@@ -71,8 +75,8 @@ char	*ft_read(int fd, char *reserv)
 char	*get_next_line(int fd)
 {
 	static char	*reserv;
-	char		*line;
 	char		*aux;
+	char		*line;
 
 	if (fd <= 0 || BUFFER_SIZE <= 0)
 		return (NULL);
