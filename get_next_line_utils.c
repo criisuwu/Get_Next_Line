@@ -6,7 +6,7 @@
 /*   By: chomobon <chomobon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 11:17:11 by chomobon          #+#    #+#             */
-/*   Updated: 2024/07/16 15:48:54 by chomobon         ###   ########.fr       */
+/*   Updated: 2024/07/19 15:23:39 by chomobon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*ft_strchr(const char *s, int c)
 			return ((char *)(s));
 	}
 	if ((char) c == '\0')
-		return((char *) s);
+		return ((char *) s);
 	return (NULL);
 }
 
@@ -35,7 +35,7 @@ char	*ft_strdup(char *s1)
 
 	i = 0;
 	if (!s1)
-		return(NULL);
+		return (NULL);
 	l = ft_strlen(s1);
 	d = malloc(l + 1);
 	if (!d)
@@ -49,13 +49,13 @@ char	*ft_strdup(char *s1)
 	return (d);
 }
 
-int	ft_strlen(const char *str)
+size_t	ft_strlen(const char *str)
 {
 	int	x;
 
 	x = 0;
 	if (str == NULL)
-		return(0);
+		return (0);
 	while (str[x] != '\0')
 	{
 		x++;
