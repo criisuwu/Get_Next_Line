@@ -1,3 +1,6 @@
 .vscode
 a.out
+b.out
+c.out
 README.md
+.gitignore

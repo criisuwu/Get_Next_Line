@@ -6,7 +6,7 @@
 /*   By: chomobon <chomobon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 11:04:22 by chomobon          #+#    #+#             */
-/*   Updated: 2024/07/19 17:58:38 by chomobon         ###   ########.fr       */
+/*   Updated: 2024/08/06 19:21:14 by chomobon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,33 +15,51 @@
 char	*ft_place_static(char *str)
 {
 	char	*position;
-	int		len;
+	int		i;
+	int		j;
 
-	position = 0;
-	len = ft_strlen(ft_strchr(str, '\n'));
-	if (len != 0)
-		position = ft_substr(ft_strchr(str, '\n'), 0, len);
-	else if (len == 0)
-		position = 0;
-	return (position);
+	i = 0;
+	while (str[i] && str[i] != '\n')
+		i++;
+	if (!str[i])
+		return (free(str), NULL);
+	position = (char *)malloc(sizeof(char) * (ft_strlen(str) - i + 1));
+	if (!position)
+		return (free(str), NULL);
+	i++;
+	j = 0;
+	while (str[i])
+		position[j++] = str[i++];
+	position[j] = '\0';
+	return (free(str), position);
 }
 
 //Esta funcion separa la linea una vez encontrado el salto de linea
 char	*ft_line(char *str)
 {
 	char	*line;
-	int		len;
-	int		breakline;
+	int		i;
 
-	line = 0;
-	len = ft_strlen(str);
-	if (!ft_strchr(str, '\n') && len > 0)
-		line = ft_substr(str, 0, len);
-	else if (len > 0)
+	i = 0;
+	if (!str[i])
+		return (NULL);
+	while (str[i] && str[i] != '\n')
+		i++;
+	if (str[i] == '\n')
+		line = (char *)malloc(sizeof(char) * (i + 2));
+	else
+		line = (char *)malloc(sizeof(char) * i + 1);
+	if (!line)
+		return (NULL);
+	i = 0;
+	while (str[i] && str[i] != '\n')
 	{
-		breakline = ft_strlen(ft_strchr(str, '\n'));
-		line = ft_substr(str, 0, len - breakline);
+		line[i] = str[i];
+		i++;
 	}
+	if (str[i] == '\n')
+		line[i++] = '\n';
+	line[i] = '\0';
 	return (line);
 }
 
@@ -50,24 +68,18 @@ char	*ft_read(int fd, char *reserv)
 {
 	char	*buff;
 	int		verify;
-	char	*aux;
-	char	*keeper;
 
-	verify = 1;
-	aux = ft_substr(reserv, 0, ft_strlen(reserv));
-	while (!ft_strchr(buff, '\n') && verify != 0)
+	buff = malloc(sizeof(char) * BUFFER_SIZE + 1);
+	if (!buff)
+		return (free (reserv), NULL);
+	while (!ft_strchr(reserv, '\n') && !ft_strchr(reserv, '\0'))
 	{
-		buff = malloc(sizeof(char) * BUFFER_SIZE + 1);
-		if (!buff)
-			return (free (reserv), NULL);
 		verify = read(fd, buff, BUFFER_SIZE);
 		if (verify <= 0)
 			return (free (buff), free(reserv), NULL);
 		buff[verify] = '\0';
-		keeper = aux;
-		aux = ft_strjoin(aux, buff);
-		free(keeper);
-		free(aux);
+		reserv = ft_strjoin(reserv, buff);
+		reserv[ft_strlen(reserv) + 1] = '\n';
 	}
 	return (free(buff), reserv);
 }
@@ -75,33 +87,24 @@ char	*ft_read(int fd, char *reserv)
 char	*get_next_line(int fd)
 {
 	static char	*reserv;
-	char		*aux;
 	char		*line;
 
-	if (fd <= 0 || BUFFER_SIZE <= 0)
+	if (fd <= 0 && BUFFER_SIZE <= 0)
 		return (NULL);
-	aux = ft_read(fd, reserv);
-	if (!aux)
-	{
-		if (reserv)
-		{
-			free(reserv);
-			reserv = 0;
-		}
+	reserv = ft_read(fd, reserv);
+	if (!reserv)
 		return (NULL);
-	}
-	line = ft_line(aux);
-	if (!line && reserv)
-		return (free (reserv), NULL);
-	reserv = ft_place_static(aux);
-	free(aux);
+	line = ft_line(reserv);
+	if (!line)
+		return (free (reserv), reserv = NULL);
+	reserv = ft_place_static(reserv);
 	return (line);
 }
 
 int main()
 {
 	char *line;
-	int fd = open("a.txt", O_RDONLY);
+	int fd = open("43_no_nl.txt", O_RDONLY);
 	while ((line = get_next_line(fd)) != NULL)
 	{
 		printf("%s", line);
