@@ -6,7 +6,7 @@
 /*   By: chomobon <chomobon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 11:17:11 by chomobon          #+#    #+#             */
-/*   Updated: 2024/07/19 15:23:39 by chomobon         ###   ########.fr       */
+/*   Updated: 2024/08/06 15:59:26 by chomobon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*ft_strchr(const char *s, int c)
 {
-	if (!s)
+	if (!s || !s[0])
 		return (NULL);
 	while (*s != '\0')
 	{
@@ -54,40 +54,38 @@ size_t	ft_strlen(const char *str)
 	int	x;
 
 	x = 0;
-	if (str == NULL)
+	if (!str || !str[x])
 		return (0);
-	while (str[x] != '\0')
-	{
+	while (str[x])
 		x++;
-	}
 	return (x);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char *first_str, char *buf)
 {
-	unsigned int	i;
-	unsigned int	j;
-	char			*r;
+	size_t	i;
+	size_t	j;
+	char	*str;
 
-	if (!s1 || !s2)
-		return (NULL);
-	r = ((char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2)) + 1));
-	if (!r)
-		return (NULL);
-	i = 0;
-	while (s1[i] != '\0')
+	if (!first_str)
 	{
-		r[i] = s1[i];
-		i++;
+		first_str = (char *)malloc(1 * sizeof(char) + 1);
+		if (!first_str || !buf)
+			return (NULL);
+		first_str[0] = '\0';
 	}
+	str = malloc(sizeof(char) * ((ft_strlen(first_str) + ft_strlen(buf)) + 2));
+	if (!str)
+		return (free(first_str), NULL);
+	i = -1;
 	j = 0;
-	while (s2[j] != '\0')
-	{
-		r[i + j] = s2[j];
-		j++;
-	}
-	r[i + j] = '\0';
-	return (r);
+	if (first_str)
+		while (first_str[++i] != '\0')
+			str[i] = first_str[i];
+	while (buf[j] != '\0')
+		str[i++] = buf[j++];
+	str[i++] = '\0';
+	return (free(first_str), str);
 }
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
