@@ -1,6 +1,7 @@
 .vscode
 a.out
-b.out
-c.out
+a.txt
+b.txt
+c.txt
 README.md
 .gitignore
