@@ -6,7 +6,7 @@
 /*   By: chomobon <chomobon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 11:04:22 by chomobon          #+#    #+#             */
-/*   Updated: 2024/08/06 19:21:14 by chomobon         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:15:21 by chomobon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,47 +64,52 @@ char	*ft_line(char *str)
 }
 
 // Esta funcion es solo de lectura, y para ir almacenando las lecturas
-char	*ft_read(int fd, char *reserv)
+char	*ft_read(int fd, char *str)
 {
-	char	*buff;
-	int		verify;
+	char	*buf;
+	int		bytes;
 
-	buff = malloc(sizeof(char) * BUFFER_SIZE + 1);
-	if (!buff)
-		return (free (reserv), NULL);
-	while (!ft_strchr(reserv, '\n') && !ft_strchr(reserv, '\0'))
+	buf = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!buf)
+		return (free(str), NULL);
+	bytes = 1;
+	while (!ft_strchr(str, '\n') && bytes > 0)
 	{
-		verify = read(fd, buff, BUFFER_SIZE);
-		if (verify <= 0)
-			return (free (buff), free(reserv), NULL);
-		buff[verify] = '\0';
-		reserv = ft_strjoin(reserv, buff);
-		reserv[ft_strlen(reserv) + 1] = '\n';
+		bytes = read(fd, buf, BUFFER_SIZE);
+		if (bytes == -1)
+		{
+			free(buf);
+			free(str);
+			return (NULL);
+		}
+		buf[bytes] = '\0';
+		str = ft_strjoin(str, buf);
 	}
-	return (free(buff), reserv);
+	free(buf);
+	return (str);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*reserv;
 	char		*line;
+	static char	*str;
 
-	if (fd <= 0 && BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	reserv = ft_read(fd, reserv);
-	if (!reserv)
+	str = ft_read(fd, str);
+	if (!str)
 		return (NULL);
-	line = ft_line(reserv);
+	line = ft_line(str);
 	if (!line)
-		return (free (reserv), reserv = NULL);
-	reserv = ft_place_static(reserv);
+		return (free(str), str = NULL, NULL);
+	str = ft_place_static(str);
 	return (line);
 }
 
-int main()
+/* int main()
 {
 	char *line;
-	int fd = open("43_no_nl.txt", O_RDONLY);
+	int fd = open("c.txt", O_RDONLY);
 	while ((line = get_next_line(fd)) != NULL)
 	{
 		printf("%s", line);
@@ -112,4 +117,4 @@ int main()
 	}
 	close(fd);
 	return (0);
-}
+} */
