@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: chomobon <chomobon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 10:09:50 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/27 10:09:52 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/27 15:58:30 by chomobon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_strchr(const char *s, int c)
 {
@@ -29,7 +29,7 @@ char	*ft_strchr(const char *s, int c)
 
 size_t	ft_strlen(const char *str)
 {
-	int	x;
+	size_t	x;
 
 	x = 0;
 	if (!str || !str[x])

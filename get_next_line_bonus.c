@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: chomobon <chomobon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 10:02:30 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/27 10:09:08 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/27 15:55:35 by chomobon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_place_static(char *str)
 {
@@ -94,7 +94,7 @@ char	*get_next_line(int fd)
 	char		*line;
 	static char	*str[FOPEN_MAX];
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > FOPEN_MAX)
 		return (NULL);
 	str[fd] = ft_read(fd, str[fd]);
 	if (!str[fd])
